@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --text-color: #000000;
-  --text-color-muted: #1e293b;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --text-primary: #0F172A !important;   /* Gelap Pekat (Judul & Teks Utama) */
+  --text-secondary: #334155 !important; /* Gelap Kontras (Sub-text/Label/Muted) */
+  --border-color: #E2E8F0;
+  --input-bg: #FFFFFF;
+  --input-text: #0F172A;
+
+  --text-color: #0F172A;
+  --text-color-muted: #334155;
   
   /* Navigation Variables - Accessible High Contrast */
   --nav-text-active: #0f172a;
@@ -16,8 +24,63 @@
   --nav-sync-border: #a7f3d0;
 }
 
+:root, [data-theme='light'], body.light-mode {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --text-primary: #0F172A !important;   /* Gelap Pekat (Judul & Teks Utama) */
+  --text-secondary: #334155 !important; /* Gelap Kontras (Sub-text/Label/Muted) */
+  --border-color: #E2E8F0;
+  --input-bg: #FFFFFF;
+  --input-text: #0F172A;
+
+  --text-color: #0F172A;
+  --text-color-muted: #334155;
+  
+  /* Navigation Variables - Accessible High Contrast */
+  --nav-text-active: #0f172a;
+  --nav-text-inactive: #334155;
+  --nav-bg-active: #f1f5f9;
+  --nav-bg-inactive: transparent;
+  --nav-scan-bg: #059669;
+  --nav-scan-text: #ffffff;
+  --nav-sync-bg: #ecfdf5;
+  --nav-sync-text: #064e3b;
+  --nav-sync-border: #a7f3d0;
+}
+
+[data-theme='dark'], body.dark-mode {
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --text-primary: #F8FAFC !important;   /* Terang Pekat */
+  --text-secondary: #94A3B8 !important; /* Terang Sedang Kontras */
+  --border-color: #334155;
+  --input-bg: #1E293B;
+  --input-text: #F8FAFC;
+
+  --text-color: #ffffff;
+  --text-color-muted: #f8fafc;
+  
+  --nav-text-active: #ffffff;
+  --nav-text-inactive: #94a3b8;
+  --nav-bg-active: #1e293b;
+  --nav-bg-inactive: transparent;
+  --nav-scan-bg: #10b981;
+  --nav-scan-text: #ffffff;
+  --nav-sync-bg: #064e3b;
+  --nav-sync-text: #ecfdf5;
+  --nav-sync-border: #047857;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
+    --bg-primary: #0F172A;
+    --bg-secondary: #1E293B;
+    --text-primary: #F8FAFC !important;   /* Terang Pekat */
+    --text-secondary: #94A3B8 !important; /* Terang Sedang Kontras */
+    --border-color: #334155;
+    --input-bg: #1E293B;
+    --input-text: #F8FAFC;
+
     --text-color: #ffffff;
     --text-color-muted: #f8fafc;
     
@@ -34,6 +97,14 @@
 }
 
 .dark, [data-theme="dark"] {
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --text-primary: #F8FAFC !important;   /* Terang Pekat */
+  --text-secondary: #94A3B8 !important; /* Terang Sedang Kontras */
+  --border-color: #334155;
+  --input-bg: #1E293B;
+  --input-text: #F8FAFC;
+
   --text-color: #ffffff;
   --text-color-muted: #f8fafc;
   
@@ -46,6 +117,25 @@
   --nav-sync-bg: #064e3b;
   --nav-sync-text: #ecfdf5;
   --nav-sync-border: #047857;
+}
+
+/* Force Cross-Browser & Mobile Safari Rendering */
+body {
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Pastikan elemen form & button mengikuti variabel */
+input, select, textarea, button {
+  color: var(--text-primary);
+  -webkit-appearance: none; /* Safari fix */
+}
+
+.text-muted, .text-secondary, label, p, span {
+  color: var(--text-secondary);
+  opacity: 1 !important; /* Cabut semua efek transparansi pudar */
 }
 
 /* Global placeholder and input contrast enhancements */
@@ -124,8 +214,8 @@ input::placeholder, textarea::placeholder {
   }
 
   body {
-    background-color: #f8fafc;
-    color: #0f172a;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
