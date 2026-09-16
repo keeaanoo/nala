@@ -54,6 +54,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onOpenSyncGuide,
 }) => {
   const { user, isAdmin, isSupervisor, isEvaluator, canEditLowStockStatus } = useAuth();
+  const standardName = user ? formatStandardRoleName(user.name || user.role) : '';
   const syncInfo = useCloudSync();
   const [summary, setSummary] = useState<StockSummary | null>(null);
   const [recentTransactions, setRecentTransactions] = useState<Transaction[]>([]);
@@ -383,39 +384,38 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       {/* User Session & Transaction Export Bar */}
       {user && (
-        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-white rounded-2xl border border-slate-300 shadow-xs p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shadow-xs shrink-0 ${
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center shadow-xs shrink-0 ${
               isEvaluator
                 ? 'bg-purple-100 text-purple-700 border border-purple-200'
                 : isSupervisor
                 ? 'bg-blue-100 text-blue-700 border border-blue-200'
                 : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
             }`}>
-              {user.name.slice(0, 2).toUpperCase()}
+              {isEvaluator ? (
+                <ClipboardCheck className="w-5 h-5 text-purple-700" />
+              ) : isSupervisor ? (
+                <ShieldCheck className="w-5 h-5 text-blue-700" />
+              ) : (
+                <Users className="w-5 h-5 text-emerald-700" />
+              )}
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-bold text-slate-900 text-sm">{user.name}</span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                <span className="font-extrabold text-slate-900 text-sm">{standardName}</span>
+                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
                   isEvaluator
                     ? 'bg-purple-50 text-purple-700 border-purple-200'
                     : isSupervisor
                     ? 'bg-blue-50 text-blue-700 border-blue-200'
                     : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                 }`}>
-                  {user.role === 'evaluator' ? 'Evaluator Pengadaan' :
-                   user.role === 'supervisor' ? 'Supervisor Gudang' :
-                   user.role === 'staff' ? `Staff Gudang (${user.group || 'Group A'})` : 'Supervisor'}
+                  Sesi Aktif
                 </span>
-                {user.group && (
-                  <span className="text-[10px] font-semibold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">
-                    Group {user.group}
-                  </span>
-                )}
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                {user.department} • Terdaftar {userTxCount} catatan transaksi atas nama akun ini
+              <p className="text-xs text-slate-500 font-bold mt-0.5">
+                {user.department?.replace('Supervisor ', '').replace('Staff ', '')} • Terdaftar {userTxCount} catatan transaksi atas nama akun ini
               </p>
             </div>
           </div>
@@ -755,8 +755,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       <td className="py-2.5 px-3 text-slate-600 font-mono text-[11px]">
                         {tx.doc_ref || '-'}
                       </td>
-                      <td className="py-2.5 px-3 text-slate-600 truncate max-w-[100px] sm:max-w-[140px]">
-                        {tx.pic_name}
+                      <td className="py-2.5 px-3 text-slate-600 truncate max-w-[100px] sm:max-w-[140px] font-semibold">
+                        {formatStandardRoleName(tx.pic_name)}
                       </td>
                     </tr>
                   );

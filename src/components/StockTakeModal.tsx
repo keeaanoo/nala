@@ -18,6 +18,7 @@ import { InventoryItem } from '../types';
 import { db } from '../services/db';
 import { useAuth } from '../context/AuthContext';
 import { formatUnit } from '../utils/units';
+import { formatStandardRoleName } from '../utils/roleFormat';
 
 interface StockTakeModalProps {
   isOpen: boolean;
@@ -49,9 +50,9 @@ export const StockTakeModal: React.FC<StockTakeModalProps> = ({
       const codeSuffix = item.material_code.slice(-4);
       setDocRef(`BA-STO-${todayStr}-${codeSuffix}`);
       
-      const currentUserName = user?.name
-        ? `${user.name}${user.group ? ` (${user.group})` : ''}`
-        : 'Supervisor Gudang';
+      const currentUserName = user
+        ? formatStandardRoleName(user.name || user.role)
+        : 'Supervisor';
       setPicName(currentUserName);
       setDate(new Date().toISOString().slice(0, 16));
       setNotes('Pengecekan fisik berkala');

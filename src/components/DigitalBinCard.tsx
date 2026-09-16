@@ -28,6 +28,7 @@ import { useAuth } from '../context/AuthContext';
 import { parseBinLocation } from '../utils/binLocation';
 import { StockTakeModal } from './StockTakeModal';
 import { formatUnit } from '../utils/units';
+import { formatStandardRoleName } from '../utils/roleFormat';
 
 interface DigitalBinCardProps {
   item: InventoryItem;
@@ -516,8 +517,8 @@ export const DigitalBinCard: React.FC<DigitalBinCardProps> = ({
                         <td className="py-3 px-3 text-right font-extrabold text-slate-900 font-mono">
                           {tx.balance_after} <span className="text-[10px] font-normal text-slate-500">{item.unit}</span>
                         </td>
-                        <td className="py-3 px-3 text-slate-700 font-medium">
-                          {tx.pic_name}
+                        <td className="py-3 px-3 text-slate-700 font-semibold">
+                          {formatStandardRoleName(tx.pic_name)}
                         </td>
                         <td className="py-3 px-3 text-slate-600 max-w-xs truncate" title={tx.notes}>
                           {tx.notes || '-'}

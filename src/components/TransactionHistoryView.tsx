@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Transaction } from '../types';
 import { db } from '../services/db';
+import { formatStandardRoleName } from '../utils/roleFormat';
 
 interface TransactionHistoryViewProps {
   onSelectItemByCode: (code: string) => void;
@@ -315,8 +316,8 @@ export const TransactionHistoryView: React.FC<TransactionHistoryViewProps> = ({
                         {tx.doc_ref || '-'}
                       </td>
 
-                      <td className="py-3 px-3 text-slate-700 font-medium whitespace-nowrap">
-                        {tx.pic_name}
+                      <td className="py-3 px-3 text-slate-700 font-semibold whitespace-nowrap">
+                        {formatStandardRoleName(tx.pic_name)}
                       </td>
 
                       <td

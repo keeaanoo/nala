@@ -4,6 +4,7 @@ import { InventoryItem, TransactionType } from '../types';
 import { db } from '../services/db';
 import { useAuth } from '../context/AuthContext';
 import { formatUnit } from '../utils/units';
+import { formatStandardRoleName } from '../utils/roleFormat';
 
 interface TransactionModalProps {
   isOpen: boolean;
@@ -34,10 +35,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
     if (isOpen && item) {
       setType(initialType);
       setQuantity(0);
-      // Auto-fill & Lock Nama berdasarkan user logged-in
-      const currentUserName = user?.name
-        ? `${user.name}${user.group ? ` (${user.group})` : ''}`
-        : 'Petugas Logistik';
+      // Auto-fill & Lock Nama berdasarkan user logged-in (standardized role name)
+      const currentUserName = user
+        ? formatStandardRoleName(user.name || user.role)
+        : 'Staff Shift';
       setPicName(currentUserName);
       setDocRef('');
       setNotes('');
