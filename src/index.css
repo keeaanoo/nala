@@ -51,8 +51,8 @@
 [data-theme='dark'], body.dark-mode {
   --bg-primary: #0F172A;
   --bg-secondary: #1E293B;
-  --text-primary: #F8FAFC !important;   /* Terang Pekat */
-  --text-secondary: #94A3B8 !important; /* Terang Sedang Kontras */
+  --text-primary: #0F172A !important;   /* Gelap Pekat (Judul & Teks Utama) */
+  --text-secondary: #334155 !important; /* Gelap Kontras (Sub-text/Label/Muted) */
   --border-color: #334155;
   --input-bg: #1E293B;
   --input-text: #F8FAFC;
