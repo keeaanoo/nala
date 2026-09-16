@@ -71,31 +71,6 @@
   --nav-sync-border: #047857;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: #0F172A;
-    --bg-secondary: #1E293B;
-    --text-primary: #F8FAFC !important;   /* Terang Pekat */
-    --text-secondary: #94A3B8 !important; /* Terang Sedang Kontras */
-    --border-color: #334155;
-    --input-bg: #1E293B;
-    --input-text: #F8FAFC;
-
-    --text-color: #ffffff;
-    --text-color-muted: #f8fafc;
-    
-    --nav-text-active: #ffffff;
-    --nav-text-inactive: #94a3b8;
-    --nav-bg-active: #1e293b;
-    --nav-bg-inactive: transparent;
-    --nav-scan-bg: #10b981;
-    --nav-scan-text: #ffffff;
-    --nav-sync-bg: #064e3b;
-    --nav-sync-text: #ecfdf5;
-    --nav-sync-border: #047857;
-  }
-}
-
 .dark, [data-theme="dark"] {
   --bg-primary: #0F172A;
   --bg-secondary: #1E293B;
@@ -127,9 +102,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Pastikan elemen form & button mengikuti variabel */
-input, select, textarea, button {
+/* Keep form fields readable in the active app theme. */
+input, select, textarea {
   color: var(--text-color);
+  -webkit-appearance: none; /* Safari fix */
+}
+
+/* Do not set a global button text color: Tailwind text utilities should decide it. */
+button {
   -webkit-appearance: none; /* Safari fix */
 }
 
