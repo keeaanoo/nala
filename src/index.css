@@ -121,7 +121,7 @@
 
 /* Force Cross-Browser & Mobile Safari Rendering */
 body {
-  color: var(--text-primary);
+  color: var(--text-color);
   background-color: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -129,71 +129,31 @@ body {
 
 /* Pastikan elemen form & button mengikuti variabel */
 input, select, textarea, button {
-  color: var(--text-primary);
+  color: var(--text-color);
   -webkit-appearance: none; /* Safari fix */
 }
 
-.text-muted, .text-secondary, label, p, span {
-  color: var(--text-secondary);
-  opacity: 1 !important; /* Cabut semua efek transparansi pudar */
+.text-muted {
+  color: var(--text-color-muted) !important;
 }
 
 /* Global placeholder and input contrast enhancements */
 input::placeholder, textarea::placeholder {
-  color: #334155 !important; /* High-contrast dark gray for placeholders in light mode */
+  color: #64748b !important; /* High-contrast slate-500/400 for placeholders in light mode */
   opacity: 1 !important;
 }
 
 @media (prefers-color-scheme: dark) {
   input::placeholder, textarea::placeholder {
-    color: #e2e8f0 !important; /* Bright white/gray for placeholders in dark mode */
+    color: #94a3b8 !important; /* Bright slate-400 for placeholders in dark mode */
     opacity: 1 !important;
   }
 }
 
 .dark input::placeholder, .dark textarea::placeholder,
 [data-theme="dark"] input::placeholder, [data-theme="dark"] textarea::placeholder {
-  color: #e2e8f0 !important;
+  color: #94a3b8 !important;
   opacity: 1 !important;
-}
-
-/* Globally raise contrast of secondary/muted classes in Light Mode (retaining correctness in Dark) */
-.text-slate-500, .text-gray-500 {
-  color: #1e293b !important; /* Force to dark charcoal/slate-800 for high visibility on light bg */
-}
-.text-slate-400, .text-gray-400 {
-  color: #0f172a !important; /* Force to near-black for high contrast */
-}
-.text-slate-600, .text-gray-600 {
-  color: #000000 !important; /* Force to black for outstanding contrast */
-}
-
-/* Ensure dark mode restores proper bright text for secondary classes */
-@media (prefers-color-scheme: dark) {
-  .text-slate-500, .text-gray-500 {
-    color: #cbd5e1 !important;
-  }
-  .text-slate-400, .text-gray-400 {
-    color: #cbd5e1 !important;
-  }
-  .text-slate-600, .text-gray-600 {
-    color: #f1f5f9 !important;
-  }
-}
-
-.dark .text-slate-500, .dark .text-gray-500,
-[data-theme="dark"] .text-slate-500, [data-theme="dark"] .text-gray-500 {
-  color: #cbd5e1 !important;
-}
-
-.dark .text-slate-400, .dark .text-gray-400,
-[data-theme="dark"] .text-slate-400, [data-theme="dark"] .text-gray-400 {
-  color: #cbd5e1 !important;
-}
-
-.dark .text-slate-600, .dark .text-gray-600,
-[data-theme="dark"] .text-slate-600, [data-theme="dark"] .text-gray-600 {
-  color: #f1f5f9 !important;
 }
 
 .nav-link-text {

@@ -567,7 +567,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         ) : (
           <div className="overflow-x-auto rounded-xl border border-slate-200/90">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-700 text-[10px] uppercase font-bold border-b border-slate-200">
+              <thead className="bg-slate-200/60 text-slate-700 text-[10px] uppercase font-bold border-b border-slate-200">
                 <tr>
                   <th className="py-3 px-3">Kode Material</th>
                   <th className="py-3 px-3">Nama Barang & Lokasi</th>
@@ -706,7 +706,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         ) : (
           <div className="overflow-x-auto rounded-xl border border-slate-200/80">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-600 text-[10px] uppercase font-semibold border-b border-slate-200">
+              <thead className="bg-slate-200/60 text-slate-700 text-[10px] uppercase font-bold border-b border-slate-200">
                 <tr>
                   <th className="py-2.5 px-3">Waktu</th>
                   <th className="py-2.5 px-3">Kode & Nama Barang</th>

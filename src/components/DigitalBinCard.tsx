@@ -450,7 +450,7 @@ export const DigitalBinCard: React.FC<DigitalBinCardProps> = ({
           ) : (
             <div className="overflow-x-auto rounded-xl border border-slate-200">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-100 text-slate-700 font-semibold uppercase tracking-wider text-[10px] border-b border-slate-200">
+                <thead className="bg-slate-200/60 text-slate-700 text-[10px] uppercase font-bold tracking-wider border-b border-slate-200">
                   <tr>
                     <th className="py-3 px-3">No</th>
                     <th className="py-3 px-3">Tanggal & Jam</th>

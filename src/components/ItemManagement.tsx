@@ -264,10 +264,10 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
   const isAllCurrentPageSelected = items.length > 0 && items.every((it) => selectedIds.has(it.id));
 
   return (
-    <div className="space-y-4 max-w-7xl mx-auto pb-16">
+    <div className="space-y-4 max-w-7xl mx-auto pb-16" style={{ borderColor: '#000000' }}>
       
       {/* Control Toolbar Header */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+      <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
         
         {/* Title & Action Buttons Row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -278,7 +278,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                 {totalItems.toLocaleString('id-ID')} Total Barang
               </span>
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-600 font-normal">
               Cari nomor material, cetak stiker label QR, dan kelola mutasi stok
             </p>
           </div>
@@ -289,7 +289,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
               <>
                 <button
                   onClick={onOpenAddItem}
-                  className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-bold rounded-lg shadow-sm shadow-indigo-200 transition-all"
+                  className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 text-white font-semibold hover:bg-indigo-700 active:scale-95 text-xs rounded-lg shadow-sm transition-all cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Tambah Barang</span>
@@ -297,10 +297,10 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
 
                 <button
                   onClick={onOpenImportCsv}
-                  className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg border border-emerald-300 transition-all"
+                  className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 text-emerald-700 border border-emerald-300 hover:bg-emerald-100 font-medium text-xs rounded-lg transition-all cursor-pointer"
                   title="Import data massal menggunakan file format Excel (.xlsx) atau CSV"
                 >
-                  <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+                  <FileSpreadsheet className="w-4 h-4 text-emerald-700" />
                   <span>Import Excel / CSV</span>
                 </button>
               </>
@@ -309,10 +309,10 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             {/* Export Master Barang to Excel */}
             <button
               onClick={handleExportItems}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg border border-slate-300 transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 text-emerald-700 border border-emerald-300 hover:bg-emerald-100 font-medium text-xs rounded-lg transition-all cursor-pointer"
               title="Ekspor seluruh data barang ke format Excel (.xlsx)"
             >
-              <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+              <FileSpreadsheet className="w-4 h-4 text-emerald-700" />
               <span>Ekspor Excel (.xlsx)</span>
             </button>
 
@@ -320,7 +320,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             {selectedIds.size > 0 && (
               <button
                 onClick={handleTriggerBatchPrint}
-                className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold rounded-lg shadow-sm shadow-emerald-200 transition-all animate-pulse"
+                className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 text-emerald-700 border border-emerald-300 hover:bg-emerald-100 font-medium text-xs rounded-lg transition-all"
               >
                 <Printer className="w-4 h-4" />
                 <span>Cetak Label QR ({selectedIds.size})</span>
@@ -332,10 +332,10 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
               <button
                 onClick={handleGenerate6000}
                 disabled={isGenerating6k}
-                className="flex items-center gap-1 px-3 py-2 bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-800 text-xs font-semibold rounded-lg transition-colors"
+                className="flex items-center gap-1 px-3 py-2 bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100 font-medium text-xs rounded-lg transition-colors cursor-pointer"
                 title="Populate 6.000 items untuk menguji performa paginasi"
               >
-                <Zap className="w-3.5 h-3.5 text-amber-600" />
+                <Zap className="w-3.5 h-3.5 text-amber-800" />
                 <span>
                   {isGenerating6k
                     ? `Proses (${genProgress?.current || 0}/${genProgress?.total || 6000})...`
@@ -357,12 +357,12 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Cari kode 18 digit (031007...), nama, atau lokasi BIN (TN 1...)..."
-              className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-medium"
+              className="w-full pl-9 pr-3 py-2 bg-white text-slate-900 placeholder-slate-400 border border-slate-300 focus:border-indigo-500 rounded-lg text-xs font-medium"
             />
             {search && (
               <button
                 onClick={() => setSearch('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-600 hover:text-slate-900"
               >
                 ✕
               </button>
@@ -374,7 +374,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white text-slate-900 placeholder-slate-400 border border-slate-300 focus:border-indigo-500 rounded-lg text-xs font-medium"
             >
               <option value="all">Semua Kategori ({categories.length})</option>
               {categories.map((c) => (
@@ -388,7 +388,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             <select
               value={stockFilter}
               onChange={(e) => setStockFilter(e.target.value as any)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white text-slate-900 placeholder-slate-400 border border-slate-300 focus:border-indigo-500 rounded-lg text-xs font-medium"
             >
               <option value="all">Status Stok: Semua</option>
               <option value="normal">Stok Aman (&gt; min)</option>
@@ -402,7 +402,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="flex-1 px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="flex-1 px-3 py-2 bg-white text-slate-900 placeholder-slate-400 border border-slate-300 focus:border-indigo-500 rounded-lg text-xs font-medium"
             >
               <option value="code">Urutkan: Kode Material</option>
               <option value="name">Urutkan: Nama Barang</option>
@@ -411,7 +411,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             </select>
             <button
               onClick={() => setSortOrder((o) => (o === 'asc' ? 'desc' : 'asc'))}
-              className="p-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg text-slate-700 transition-colors"
+              className="p-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg text-slate-700 transition-colors cursor-pointer"
               title={`Urutan: ${sortOrder === 'asc' ? 'Menaik (A-Z)' : 'Menurun (Z-A)'}`}
             >
               <ArrowUpDown className="w-4 h-4" />
@@ -434,13 +434,13 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handleClearSelection}
-              className="px-2.5 py-1 text-slate-300 hover:text-white text-xs underline"
+              className="px-2.5 py-1 text-slate-300 hover:text-white text-xs underline cursor-pointer"
             >
               Batalkan Pilihan
             </button>
             <button
               onClick={handleTriggerBatchPrint}
-              className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Cetak Sekarang</span>
@@ -450,7 +450,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
       )}
 
       {/* Main Items Data Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         
         {isLoading && (
           <div className="h-1 bg-indigo-600 animate-pulse" />
@@ -458,7 +458,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-100 text-slate-700 text-[10px] uppercase font-bold tracking-wider border-b border-slate-200">
+            <thead className="bg-slate-200/80 text-slate-800 font-bold uppercase tracking-wider border-b border-slate-200">
               <tr>
                 <th className="py-3 px-3 w-10 text-center">
                   <input
@@ -481,13 +481,13 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             <tbody className="divide-y divide-slate-200">
               {items.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-500">
-                    <p className="font-semibold text-xs text-slate-700">Tidak ada barang yang cocok</p>
+                  <td colSpan={7} className="py-12 text-center text-slate-600 font-normal">
+                    <p className="font-bold text-xs text-slate-900">Tidak ada barang yang cocok</p>
                     <p className="text-[11px] mt-1">Coba sesuaikan kata kunci pencarian atau filter kategori.</p>
                   </td>
                 </tr>
               ) : (
-                items.map((item) => {
+                items.map((item, idx) => {
                   const isSelected = selectedIds.has(item.id);
                   const isOut = item.current_stock <= 0;
                   const isLow = item.current_stock > 0 && item.current_stock <= item.min_stock;
@@ -510,10 +510,10 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                       </td>
 
                       {/* Material Code */}
-                      <td className="py-3 px-3 whitespace-nowrap">
+                      <td className="py-3 px-3 whitespace-nowrap" style={idx === 0 ? { borderColor: '#0f2b1d' } : undefined}>
                         <button
                           onClick={() => onOpenBinCard(item)}
-                          className="font-mono font-bold text-xs text-indigo-700 hover:text-indigo-900 hover:underline flex items-center gap-1"
+                          className="font-mono font-bold text-xs text-indigo-700 hover:text-indigo-900 hover:underline flex items-center gap-1 cursor-pointer"
                           title="Buka Kartu Barang Digital (Bin Card)"
                         >
                           <span>{item.material_code}</span>
@@ -524,17 +524,17 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                       <td className="py-3 px-4">
                         <div
                           onClick={() => onOpenBinCard(item)}
-                          className="font-semibold text-slate-900 cursor-pointer hover:text-indigo-600 transition-colors"
+                          className="font-bold text-slate-900 cursor-pointer hover:text-indigo-600 transition-colors"
                         >
                           {item.name}
                         </div>
-                        <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                        <div className="text-[11px] text-slate-600 font-normal line-clamp-1 mt-0.5">
                           {item.description}
                         </div>
                       </td>
 
                       {/* Category */}
-                      <td className="py-3 px-3 whitespace-nowrap text-slate-600">
+                      <td className="py-3 px-3 whitespace-nowrap text-slate-600 font-normal">
                         <span className="inline-flex items-center gap-1 text-[11px]">
                           <Layers className="w-3 h-3 text-slate-400" />
                           {item.category}
@@ -542,7 +542,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                       </td>
 
                       {/* Location */}
-                      <td className="py-3 px-3 whitespace-nowrap text-slate-700">
+                      <td className="py-3 px-3 whitespace-nowrap text-slate-600 font-normal">
                         <span className="inline-flex items-center gap-1 text-[11px] font-medium bg-slate-100 px-2 py-0.5 rounded">
                           <MapPin className="w-3 h-3 text-amber-500" />
                           {item.location}
@@ -555,9 +555,9 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                           isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : 'text-slate-900'
                         }`}>
                           {item.current_stock}{' '}
-                          <span className="text-[10px] font-normal text-slate-500">{formatUnit(item.unit)}</span>
+                          <span className="text-[10px] font-normal text-slate-600">{formatUnit(item.unit)}</span>
                         </div>
-                        <div className="text-[10px] text-slate-400">
+                        <div className="text-[10px] text-slate-600 font-normal">
                           Min: {item.min_stock} {formatUnit(item.unit)}
                         </div>
                       </td>
@@ -569,7 +569,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                           {/* Bin Card Button */}
                           <button
                             onClick={() => onOpenBinCard(item)}
-                            className="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold rounded-md text-[11px] flex items-center gap-1 transition-colors"
+                            className="px-2.5 py-1 bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 font-medium rounded-md text-[11px] flex items-center gap-1 transition-colors cursor-pointer"
                             title="Buka Kartu Barang Digital"
                           >
                             <Eye className="w-3 h-3" />
@@ -579,17 +579,17 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                           {/* Quick STO Button */}
                           <button
                             onClick={() => setStoItem(item)}
-                            className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold rounded-md text-[11px] flex items-center gap-1 transition-colors"
+                            className="px-2 py-1 bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 font-medium rounded-md text-[11px] flex items-center gap-1 transition-colors cursor-pointer"
                             title="Stock Take / STO (Opname Fisik Barang)"
                           >
                             <ClipboardCheck className="w-3 h-3" />
                             <span>STO</span>
                           </button>
 
-                          {/* Tombol Edit Barang (Semua rincian barang dapat diedit langsung) */}
+                          {/* Tombol Edit Barang */}
                           <button
                             onClick={() => onOpenEditItem(item)}
-                            className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 font-semibold rounded-md text-[11px] flex items-center gap-1 transition-colors shadow-2xs"
+                            className="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100 font-medium rounded-md text-[11px] flex items-center gap-1 transition-colors shadow-2xs cursor-pointer"
                             title="Edit Barang (Ubah rincian informasi seperti nama, Bin Location, satuan, dll.)"
                           >
                             <Edit3 className="w-3 h-3 text-amber-700" />
@@ -599,7 +599,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                           {/* Quick In/Out buttons for field staff and admin */}
                           <button
                             onClick={() => onRecordTransaction(item, 'IN')}
-                            className="p-1 text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors"
+                            className="p-1 text-emerald-700 hover:bg-emerald-50 border border-transparent hover:border-emerald-200 rounded-md transition-colors cursor-pointer"
                             title="Catat Pemasukan (IN)"
                           >
                             <ArrowDownLeft className="w-4 h-4" />
@@ -607,7 +607,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                           <button
                             onClick={() => onRecordTransaction(item, 'OUT')}
                             disabled={isOut}
-                            className="p-1 text-rose-700 hover:bg-rose-50 rounded-md transition-colors disabled:opacity-40"
+                            className="p-1 text-rose-700 hover:bg-rose-50 border border-transparent hover:border-rose-200 rounded-md transition-colors disabled:opacity-40 cursor-pointer"
                             title="Catat Pengeluaran (OUT)"
                           >
                             <ArrowUpRight className="w-4 h-4" />
@@ -616,7 +616,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                           {/* Single QR Print/View */}
                           <button
                             onClick={() => onOpenBatchPrint([item])}
-                            className="p-1 text-slate-600 hover:text-indigo-600 hover:bg-slate-100 rounded-md transition-colors"
+                            className="p-1 text-slate-600 hover:text-indigo-600 hover:bg-slate-100 rounded-md transition-colors cursor-pointer"
                             title="Cetak Label QR Barang Ini"
                           >
                             <QrCode className="w-4 h-4" />
@@ -626,7 +626,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
                           {(isAdmin || isSupervisor) && (
                             <button
                               onClick={() => handleDeleteItem(item)}
-                              className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors"
+                              className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
                               title="Hapus Barang"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -648,7 +648,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
         <div className="bg-slate-50 px-4 py-3 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
           
           <div className="flex items-center gap-3">
-            <span className="text-slate-600">
+            <span className="text-slate-600 font-normal">
               Menampilkan{' '}
               <strong>
                 {totalItems === 0 ? 0 : (page - 1) * pageSize + 1}-
@@ -658,11 +658,11 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             </span>
 
             <div className="flex items-center gap-1">
-              <span className="text-slate-500">Per halaman:</span>
+              <span className="text-slate-600 font-normal">Per halaman:</span>
               <select
                 value={pageSize}
                 onChange={(e) => setPageSize(parseInt(e.target.value, 10))}
-                className="bg-white border border-slate-300 rounded px-2 py-1 text-xs font-semibold"
+                className="bg-white text-slate-900 border border-slate-300 rounded px-2 py-1 text-xs font-semibold"
               >
                 <option value={10}>10</option>
                 <option value={25}>25</option>
@@ -677,20 +677,20 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              className="p-1.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="p-1.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
               title="Halaman Sebelumnya"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
 
-            <span className="font-medium text-slate-700">
+            <span className="font-normal text-slate-600">
               Hal. <strong>{page}</strong> dari <strong>{totalPages}</strong>
             </span>
 
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
-              className="p-1.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="p-1.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
               title="Halaman Berikutnya"
             >
               <ChevronRight className="w-4 h-4" />
@@ -719,7 +719,7 @@ export const ItemManagement: React.FC<ItemManagementProps> = ({
               />
               <button
                 type="submit"
-                className="px-2 py-1 bg-slate-200 hover:bg-slate-300 rounded text-[11px] font-semibold"
+                className="px-2 py-1 bg-slate-200 hover:bg-slate-300 rounded text-[11px] font-semibold cursor-pointer"
               >
                 Go
               </button>

@@ -199,7 +199,7 @@ export const TransactionHistoryView: React.FC<TransactionHistoryViewProps> = ({
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-100 text-slate-700 text-[10px] uppercase font-bold tracking-wider border-b border-slate-200">
+            <thead className="bg-slate-200/60 text-slate-700 text-[10px] uppercase font-bold tracking-wider border-b border-slate-200">
               <tr>
                 <th className="py-3 px-4">Waktu Transaksi</th>
                 <th className="py-3 px-3">Kode Material</th>
