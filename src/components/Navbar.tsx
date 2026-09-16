@@ -87,36 +87,33 @@ export const Navbar: React.FC<NavbarProps> = ({
           <nav className="hidden md:flex items-center gap-1.5">
             <button
               onClick={() => handleNavigate('/dashboard', 'dashboard')}
-              style={{ color: activeTab === 'dashboard' ? undefined : 'var(--text-color)' }}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors cursor-pointer ${
-                activeTab === 'dashboard'
-                  ? 'bg-indigo-50 text-indigo-700 font-bold shadow-2xs'
-                  : 'text-slate-800 hover:bg-slate-100/90'
-              }`}
+              style={{
+                color: activeTab === 'dashboard' ? 'var(--nav-text-active)' : 'var(--nav-text-inactive)',
+                backgroundColor: activeTab === 'dashboard' ? 'var(--nav-bg-active)' : 'var(--nav-bg-inactive)'
+              }}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-bold transition-colors cursor-pointer"
             >
               <LayoutDashboard className="w-4 h-4 shrink-0" />
               <span className="nav-link-text">Dashboard</span>
             </button>
             <button
               onClick={() => handleNavigate('/items', 'items')}
-              style={{ color: activeTab === 'items' ? undefined : 'var(--text-color)' }}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors cursor-pointer ${
-                activeTab === 'items'
-                  ? 'bg-indigo-50 text-indigo-700 font-bold shadow-2xs'
-                  : 'text-slate-800 hover:bg-slate-100/90'
-              }`}
+              style={{
+                color: activeTab === 'items' ? 'var(--nav-text-active)' : 'var(--nav-text-inactive)',
+                backgroundColor: activeTab === 'items' ? 'var(--nav-bg-active)' : 'var(--nav-bg-inactive)'
+              }}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-bold transition-colors cursor-pointer"
             >
               <PackageSearch className="w-4 h-4 shrink-0" />
               <span className="nav-link-text">Manajemen Barang</span>
             </button>
             <button
               onClick={() => handleNavigate('/transactions', 'transactions')}
-              style={{ color: activeTab === 'transactions' ? undefined : 'var(--text-color)' }}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors cursor-pointer ${
-                activeTab === 'transactions'
-                  ? 'bg-indigo-50 text-indigo-700 font-bold shadow-2xs'
-                  : 'text-slate-800 hover:bg-slate-100/90'
-              }`}
+              style={{
+                color: activeTab === 'transactions' ? 'var(--nav-text-active)' : 'var(--nav-text-inactive)',
+                backgroundColor: activeTab === 'transactions' ? 'var(--nav-bg-active)' : 'var(--nav-bg-inactive)'
+              }}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-bold transition-colors cursor-pointer"
             >
               <ArrowRightLeft className="w-4 h-4 shrink-0" />
               <span className="nav-link-text">Riwayat Mutasi</span>
@@ -129,12 +126,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Real-time Cloud Sync & Multi-Device Button */}
             <button
               onClick={onOpenSyncGuide}
-              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold rounded-lg border transition-all ${
+              style={{
+                backgroundColor: syncInfo.status === 'synced' ? 'var(--nav-sync-bg)' : undefined,
+                color: syncInfo.status === 'synced' ? 'var(--nav-sync-text)' : undefined,
+                borderColor: syncInfo.status === 'synced' ? 'var(--nav-sync-border)' : undefined,
+              }}
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
                 syncInfo.status === 'synced'
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
+                  ? 'hover:opacity-95'
                   : syncInfo.status === 'syncing' || syncInfo.status === 'connecting'
-                  ? 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100'
-                  : 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200'
+                  ? 'bg-amber-50 text-amber-950 border-amber-400 hover:bg-amber-100'
+                  : 'bg-slate-100 text-slate-900 border-slate-300 hover:bg-slate-200'
               }`}
               title="Status Sinkronisasi Cloud Multi-Perangkat (Firebase)"
             >
@@ -164,7 +166,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="navbar-scan-btn"
               onClick={onOpenScanner}
-              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm font-medium rounded-lg shadow-sm shadow-emerald-200 transition-all active:scale-95"
+              style={{
+                backgroundColor: 'var(--nav-scan-bg)',
+                color: 'var(--nav-scan-text)'
+              }}
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 text-sm font-bold rounded-lg shadow-sm shadow-emerald-200 hover:opacity-90 transition-all active:scale-95 cursor-pointer border border-emerald-500/20"
               title="Pindai QR Code Kartu Barang"
             >
               <Scan className="w-4 h-4 animate-pulse" />

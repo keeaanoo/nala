@@ -10,7 +10,7 @@ interface LoginModalProps {
 }
 
 export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-  const { user, isAdmin, isSupervisor, isEvaluator, loginWithCredentials, loginAs, logout } = useAuth();
+  const { user, isAdmin, isSupervisor, isEvaluator, loginWithCredentials, logout } = useAuth();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -32,21 +32,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       setError(res.message || 'Username atau password salah.');
     }
   };
-
-  const handleQuickRoleSwitch = (roleKey: string) => {
-    loginAs(roleKey);
-    setError(null);
-    onClose();
-  };
-
-  const standardRoles = [
-    { key: 'spv', label: 'Supervisor', role: 'supervisor', icon: ShieldCheck, badge: 'Full Access', color: 'blue' },
-    { key: 'eval', label: 'Evaluator', role: 'evaluator', icon: ClipboardCheck, badge: 'Audit & Review', color: 'purple' },
-    { key: 'staff_a', label: 'Staff Shift Group A', role: 'staff', icon: Users, badge: 'Operasional', color: 'emerald' },
-    { key: 'staff_b', label: 'Staff Shift Group B', role: 'staff', icon: Users, badge: 'Operasional', color: 'emerald' },
-    { key: 'staff_c', label: 'Staff Shift Group C', role: 'staff', icon: Users, badge: 'Operasional', color: 'emerald' },
-    { key: 'staff_d', label: 'Staff Shift Group D', role: 'staff', icon: Users, badge: 'Operasional', color: 'emerald' },
-  ];
 
   const currentRoleName = user ? formatStandardRoleName(user.name || user.role) : '';
 
@@ -136,49 +121,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             </div>
           ) : (
             <div className="p-4 rounded-xl bg-amber-100 border-2 border-amber-300 text-amber-950 text-xs font-semibold">
-              Belum ada pengguna yang login. Silakan pilih role di bawah atau masukkan username & sandi.
+              Belum ada pengguna yang login. Silakan masukkan username & sandi kredensial di bawah untuk masuk.
             </div>
           )}
 
-          {/* Quick Role Switcher (Pure 6 Standard Roles) */}
-          <div>
-            <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider mb-2.5" style={{ color: 'var(--color-text-primary)' }}>
-              Pilih Role Akun Cepat:
-            </h4>
-            <div className="grid grid-cols-2 gap-2">
-              {standardRoles.map((r) => {
-                const isActive = currentRoleName.toLowerCase() === r.label.toLowerCase();
-                const IconComponent = r.icon;
-                return (
-                  <button
-                    key={r.key}
-                    type="button"
-                    onClick={() => handleQuickRoleSwitch(r.key)}
-                    className={`flex items-center justify-between p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-indigo-50 border-indigo-500 ring-2 ring-indigo-500/20 shadow-xs'
-                        : 'bg-white hover:bg-slate-50 border-slate-300 hover:border-slate-400'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 min-w-0">
-                      <IconComponent className={`w-4 h-4 shrink-0 ${isActive ? 'text-indigo-700' : 'text-slate-700'}`} />
-                      <span className={`text-xs font-bold truncate ${isActive ? 'text-indigo-950' : 'text-slate-900'}`}>
-                        {r.label}
-                      </span>
-                    </div>
-                    {isActive && (
-                      <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 shrink-0 ml-1" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
           {/* Switch Account Form (Credentials-based with High Contrast) */}
-          <div className="pt-3 border-t border-slate-300">
+          <div className="pt-1">
             <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-primary)' }}>
-              Atau Masuk dengan Kredensial Khusus:
+              Masuk dengan Kredensial Resmi:
             </h4>
             <form onSubmit={handleCustomLogin} className="space-y-3">
               <div>
