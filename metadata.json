@@ -1,0 +1,10 @@
+{
+  "name": "Warehouse Inventory & Digital Bin Card System",
+  "description": "Sistem Manajemen Inventaris Gudang dengan Kartu Barang Digital (Bin Card), QR Code Scanner & Generator, Batch Print Stiker, dan Manajemen Mutasi Stok.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,224 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { X, KeyRound, LogOut, ShieldCheck, ClipboardCheck, Users, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { formatStandardRoleName } from '../utils/roleFormat';
+
+interface LoginModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
+  const { user, isAdmin, isSupervisor, isEvaluator, loginWithCredentials, loginAs, logout } = useAuth();
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+
+  if (!isOpen) return null;
+
+  const handleCustomLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!username.trim()) {
+      setError('Masukkan username akun');
+      return;
+    }
+    const res = loginWithCredentials(username, password);
+    if (res.success) {
+      setError(null);
+      onClose();
+    } else {
+      setError(res.message || 'Username atau password salah.');
+    }
+  };
+
+  const handleQuickRoleSwitch = (roleKey: string) => {
+    loginAs(roleKey);
+    setError(null);
+    onClose();
+  };
+
+  const standardRoles = [
+    { key: 'spv', label: 'Supervisor', role: 'supervisor', icon: ShieldCheck, badge: 'Full Access', color: 'blue' },
+    { key: 'eval', label: 'Evaluator', role: 'evaluator', icon: ClipboardCheck, badge: 'Audit & Review', color: 'purple' },
+    { key: 'staff_a', label: 'Staff Shift Group A', role: 'staff', icon: Users, badge: 'Operasional', color: 'emerald' },
+    { key: 'staff_b', label: 'Staff Shift Group B', role: 'staff', icon: Users, badge: 'Operasional', color: 'emerald' },
+    { key: 'staff_c', label: 'Staff Shift Group C', role: 'staff', icon: Users, badge: 'Operasional', color: 'emerald' },
+    { key: 'staff_d', label: 'Staff Shift Group D', role: 'staff', icon: Users, badge: 'Operasional', color: 'emerald' },
+  ];
+
+  const currentRoleName = user ? formatStandardRoleName(user.name || user.role) : '';
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-300">
+        
+        {/* Header - High Contrast Dark Header */}
+        <div className="bg-slate-900 text-white px-6 py-4 flex items-center justify-between border-b border-slate-800">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-lg bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 flex items-center justify-center">
+              <KeyRound className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-extrabold text-sm tracking-tight text-white">Autentikasi & Hak Akses (RBAC)</h3>
+              <p className="text-xs text-slate-200">Ganti sesi akun untuk menguji fitur & batasan peran</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            aria-label="Tutup modal"
+            className="text-slate-300 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="p-6 space-y-5">
+          
+          {/* Active User Details Card - Strictly Pure Role Name & Icon (No avatar, no handle) */}
+          {user ? (
+            <div className="p-4 rounded-xl bg-slate-100/90 border-2 border-slate-300 space-y-3">
+              <div className="flex items-center gap-3.5">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg shadow-xs shrink-0 ${
+                  isEvaluator
+                    ? 'bg-purple-100 text-purple-800 border-2 border-purple-300'
+                    : isSupervisor || isAdmin
+                    ? 'bg-blue-100 text-blue-800 border-2 border-blue-300'
+                    : 'bg-emerald-100 text-emerald-800 border-2 border-emerald-300'
+                }`}>
+                  {isEvaluator ? (
+                    <ClipboardCheck className="w-6 h-6 text-purple-700" />
+                  ) : isSupervisor || isAdmin ? (
+                    <ShieldCheck className="w-6 h-6 text-blue-700" />
+                  ) : (
+                    <Users className="w-6 h-6 text-emerald-700" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="font-extrabold text-base text-slate-900 truncate" style={{ color: 'var(--color-text-primary)' }}>
+                      {currentRoleName}
+                    </span>
+                    <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border shrink-0 ${
+                      isEvaluator ? 'bg-purple-100 text-purple-900 border-purple-300' :
+                      isSupervisor || isAdmin ? 'bg-blue-100 text-blue-900 border-blue-300' :
+                      'bg-emerald-100 text-emerald-900 border-emerald-300'
+                    }`}>
+                      Aktif
+                    </span>
+                  </div>
+                  <p className="text-xs font-semibold text-slate-700 mt-0.5" style={{ color: 'var(--color-text-secondary)' }}>
+                    Hak Akses Resmi Sistem Manajemen Pergudangan
+                  </p>
+                </div>
+              </div>
+
+              {/* Session Status & Logout Button */}
+              <div className="pt-3 border-t border-slate-300 flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-900" style={{ color: 'var(--color-text-secondary)' }}>
+                  Sesi Akun Aktif
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    logout();
+                    onClose();
+                    navigate('/login', { replace: true });
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-900 border border-rose-300 text-xs font-bold transition-colors cursor-pointer"
+                  title="Keluar dari sesi akun ini"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Keluar (Logout)</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="p-4 rounded-xl bg-amber-100 border-2 border-amber-300 text-amber-950 text-xs font-semibold">
+              Belum ada pengguna yang login. Silakan pilih role di bawah atau masukkan username & sandi.
+            </div>
+          )}
+
+          {/* Quick Role Switcher (Pure 6 Standard Roles) */}
+          <div>
+            <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider mb-2.5" style={{ color: 'var(--color-text-primary)' }}>
+              Pilih Role Akun Cepat:
+            </h4>
+            <div className="grid grid-cols-2 gap-2">
+              {standardRoles.map((r) => {
+                const isActive = currentRoleName.toLowerCase() === r.label.toLowerCase();
+                const IconComponent = r.icon;
+                return (
+                  <button
+                    key={r.key}
+                    type="button"
+                    onClick={() => handleQuickRoleSwitch(r.key)}
+                    className={`flex items-center justify-between p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-indigo-50 border-indigo-500 ring-2 ring-indigo-500/20 shadow-xs'
+                        : 'bg-white hover:bg-slate-50 border-slate-300 hover:border-slate-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 min-w-0">
+                      <IconComponent className={`w-4 h-4 shrink-0 ${isActive ? 'text-indigo-700' : 'text-slate-700'}`} />
+                      <span className={`text-xs font-bold truncate ${isActive ? 'text-indigo-950' : 'text-slate-900'}`}>
+                        {r.label}
+                      </span>
+                    </div>
+                    {isActive && (
+                      <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 shrink-0 ml-1" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Switch Account Form (Credentials-based with High Contrast) */}
+          <div className="pt-3 border-t border-slate-300">
+            <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-primary)' }}>
+              Atau Masuk dengan Kredensial Khusus:
+            </h4>
+            <form onSubmit={handleCustomLogin} className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-slate-900 mb-1.5" style={{ color: 'var(--color-text-primary)' }}>
+                  Username & Kata Sandi:
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input
+                    type="text"
+                    placeholder="Username akun"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-white text-slate-900 placeholder:text-slate-500 font-semibold border-2 border-slate-300 rounded-lg focus:bg-white focus:outline-hidden focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Kata Sandi"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-white text-slate-900 placeholder:text-slate-500 font-semibold border-2 border-slate-300 rounded-lg focus:bg-white focus:outline-hidden focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
+                  />
+                </div>
+              </div>
+
+              {error && (
+                <p className="text-xs text-rose-700 font-bold bg-rose-50 border border-rose-200 p-2 rounded-lg">{error}</p>
+              )}
+
+              <button
+                type="submit"
+                className="w-full py-2.5 bg-indigo-700 hover:bg-indigo-800 active:scale-[0.99] text-white rounded-lg text-xs font-bold transition-all cursor-pointer shadow-sm"
+              >
+                Masuk dengan Kredensial
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+};
